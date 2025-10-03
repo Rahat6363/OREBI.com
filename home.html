@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OREBI — Home (Replica)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* --- Reset & base --- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; color:#222;background:#fff;line-height:1.4}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* --- Header Structure --- */
+    header {border-bottom: 1px solid #eee;}
+
+    /* --- Two Line Header --- */
+    .header {background:#fff; border-bottom: 1px solid #eee;}
+    .header .wrap {max-width:1200px;margin:0 auto;padding:0 20px}
+    
+    /* Top Row */
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      position: relative;
+    }
+    .logo {
+      font-weight:700;
+      letter-spacing:2px;
+      font-size: 22px;
+      flex: 0 0 auto;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+      margin: 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .nav-links li a {
+      padding: 6px 8px;
+      transition: color 0.2s;
+      font-size: 14px;
+    }
+    .nav-links li a:hover {
+      color: #555;
+    }
+
+    /* Bottom Row */
+    .bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+    }
+    
+    /* Category Menu */
+    .category {
+      position:relative;
+      flex: 0 0 auto;
+    }
+    .category .cat-btn {
+      display:inline-block;
+      padding:8px 12px;
+      background:#f3f3f3;
+      border-radius:2px;
+      border:1px solid #eee;
+      cursor:pointer;
+      font-size: 14px;
+    }
+    .cat-menu {
+      position:absolute;
+      left:0;
+      top:calc(100% + 6px);
+      background:#222;
+      color:#fff;
+      min-width:180px;
+      border-radius:2px;
+      overflow:hidden;
+      display:none;
+      z-index: 100;
+    }
+    .cat-menu a {
+      display:block;
+      padding:12px 16px;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+      color:#fff
+    }
+    .cat-menu a:hover {
+      background:rgba(255,255,255,0.04)
+    }
+
+    /* Search Box */
+    .search {
+      flex: 1;
+      max-width: 520px;
+      margin: 0 40px;
+    }
+    .search input {
+      width:100%;
+      padding:10px 14px;
+      border-radius:3px;
+      border:1px solid #e7e7e7;
+      background:#fff;
+      font-size: 14px;
+    }
+
+    /* Account and Cart Container */
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+
+    /* Account Dropdown */
+    .account {position: relative;}
+    .account-btn {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .account-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 6px);
+      background: #fff;
+      color: #222;
+      min-width: 160px;
+      border-radius: 2px;
+      overflow: hidden;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border: 1px solid #eee;
+      z-index: 100;
+    }
+    .account-menu a {
+      display: block;
+      padding: 10px 16px;
+      border-bottom: 1px solid #f5f5f5;
+      color: #222;
+    }
+    .account-menu a:hover {
+      background: #f9f9f9;
+    }
+
+    /* Cart */
+    .cart {position: relative;}
+    .cart-btn {
+      padding: 6px 8px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #ff4444;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* --- Hero --- */
+    .hero{background:#f6f6f6;padding:36px 0}
+    .hero .wrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:30px;padding:20px}
+    .hero-left{flex:1}
+    .kicker{font-size:13px;color:#777;margin-bottom:8px}
+    .hero-title{font-size:34px;font-weight:700;margin-bottom:12px}
+    .hero-sub{color:#666;margin-bottom:18px}
+    .btn{background:#111;color:#fff;padding:10px 16px;border-radius:2px;display:inline-block}
+    .hero-right{width:420px;max-width:45%;}
+    .hero-right img{width:100%;height:auto;object-fit:cover;border-radius:4px;}
+
+    /* --- Features row --- */
+    .features{border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
+    .features .wrap{max-width:1200px;margin:0 auto;display:flex;gap:20px;padding:12px 20px;justify-content:space-between}
+    .feature{flex:1;text-align:center;font-size:14px;color:#666;padding:10px}
+
+    /* --- Promo grid --- */
+    .promo{max-width:1200px;margin:38px auto;display:grid;grid-template-columns:2fr 1fr;gap:20px;padding:0 20px}
+    .promo .big{background:#f3f3f3;padding:40px;display:flex;flex-direction:column;justify-content:center}
+    .promo .small-grid{display:grid;grid-template-rows:1fr 1fr;gap:20px}
+    .promo .card h3{font-size:20px;margin-bottom:10px}
+    .promo .card p{color:#666;margin-bottom:14px}
+
+    /* --- Product sections --- */
+    section.products{max-width:1200px;margin:36px auto;padding:0 20px}
+    .section-head{font-size:20px;font-weight:600;margin-bottom:18px}
+    .product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+    .product{background:#fafafa;padding:18px;border:1px solid #f0f0f0;text-align:left;transition:transform 0.2s, box-shadow 0.2s;}
+    .product:hover{transform:translateY(-5px);box-shadow:0 5px 15px rgba(0,0,0,0.08);}
+    .product .img-wrap{height:200px;background:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden;border-radius:4px;}
+    .product .img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
+    .product:hover .img-wrap img{transform:scale(1.05);}
+    .product .meta{font-size:14px;color:#444;margin-bottom:8px;}
+    .product .price{font-weight:600;color:#222;margin-top:8px}
+
+    /* --- Promo banner --- */
+    .wide-banner{background:#f3f3f3;padding:36px;margin:36px 20px;border-radius:2px}
+    .wide-banner .wrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:30px}
+    .wide-banner img{width:220px;height:220px;object-fit:cover;opacity:0.9;border-radius:4px;}
+
+    /* --- Footer --- */
+    footer{background:#fafafa;border-top:1px solid #eee;padding:36px 20px}
+    footer .wrap{max-width:1200px;margin:0 auto;display:flex;gap:30px;flex-wrap:wrap}
+    footer .col{flex:1;min-width:180px}
+
+    /* --- Responsiveness --- */
+    @media (max-width:1000px){
+      .hero .wrap{flex-direction:column;}
+      .promo{grid-template-columns:1fr;}
+      .product-grid{grid-template-columns:repeat(2,1fr)}
+      .hero-right{max-width:100%}
+      .nav-links {display: none;}
+    }
+    @media (max-width:768px){
+      .header .wrap {padding: 0 15px;}
+      .top-row, .bottom-row {flex-wrap: wrap; gap: 10px;}
+      .logo {margin-right: 0;}
+      .nav-links {display: none;}
+      .search {max-width: none; margin: 0 10px; order: 2; flex: 1 0 100%;}
+      .user-actions {order: 3;}
+      .product .img-wrap{height:180px;}
+    }
+    @media (max-width:600px){
+      .header .wrap{padding:0 15px}
+      .product-grid{grid-template-columns:1fr}
+      .features .wrap{flex-direction:column;gap:8px}
+      .search{display:none}
+      .cat-menu{left:-10px}
+      .account-menu {right: -20px;}
+      .user-actions {display: none;}
+      .top-row, .bottom-row {padding: 8px 0;}
+      .product .img-wrap{height:220px;}
+    }
+
+    /* small helpers */
+    .muted{color:#777;font-size:14px}
+    .center{display:flex;align-items:center;justify-content:center}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <!-- Two Line Header -->
+    <div class="header">
+      <div class="wrap">
+        <!-- Top Row -->
+        <div class="top-row">
+          <div class="logo">OREBI</div>
+          <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Journal</a></li>
+          </ul>
+          <div></div> <!-- Empty div for spacing -->
+        </div>
+        
+        <!-- Bottom Row -->
+        <div class="bottom-row">
+          <div class="category">
+            <div class="cat-btn" id="catBtn">SHOP ▾</div>
+            <div class="cat-menu" id="catMenu">
+              <a href="#">Accessories</a>
+              <a href="#">Furniture</a>
+              <a href="#">Electronics</a>
+              <a href="#">Clothes</a>
+              <a href="#">Bags</a>
+              <a href="#">Home appliances</a>
+            </div>
+          </div>
+          
+          <div class="search"><input type="text" placeholder="Search Products" /></div>
+          
+          <div class="user-actions">
+            <div class="account">
+              <div class="account-btn" id="accountBtn">My Account ▾</div>
+              <div class="account-menu" id="accountMenu">
+                <a href="#">My Account</a>
+                <a href="#">Logout</a>
+              </div>
+            </div>
+            
+            <div class="cart">
+              <div class="cart-btn">🛒 <span class="cart-count">2</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Rest of the content remains the same -->
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-left">
+        <div class="kicker">Big Offer</div>
+        <h1 class="hero-title">Up to 50% sale for all furniture items</h1>
+        <p class="hero-sub">Exclusive deals on selected collections. Limited time only.</p>
+        <a class="btn" href="#">Shop Now</a>
+      </div>
+      <div class="hero-right">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Premium Headphones" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <div class="features">
+    <div class="wrap">
+      <div class="feature">2 years warranty</div>
+      <div class="feature">Free shipping</div>
+      <div class="feature">Return policy in 30 days</div>
+    </div>
+  </div>
+
+  <!-- Promo grid -->
+  <div class="promo">
+    <div class="big card">
+      <h3>Phones Sale</h3>
+      <p>Up to 30% sale for all phones!</p>
+      <a class="btn" href="#">Shop Now</a>
+    </div>
+    <div class="small-grid">
+      <div class="card" style="background:#f7f7f7;padding:24px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <h3>Electronics Sale</h3>
+          <p class="muted">Up to 70% sale for all electronics</p>
+          <a class="btn" href="#">Shop Now</a>
+        </div>
+        <img src="https://images.unsplash.com/photo-1518131672697-613becd4fab5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Smart Watch" style="width:120px;height:120px;object-fit:cover;border-radius:4px;">
+      </div>
+      <div class="card" style="background:#fff;padding:24px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <h3>Furniture Offer</h3>
+          <p class="muted">Up to 50% sale for all furniture items</p>
+          <a class="btn" href="#">Shop Now</a>
+        </div>
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Modern Lamp" style="width:120px;height:120px;object-fit:cover;border-radius:4px;">
+      </div>
+    </div>
+  </div>
+
+  <!-- New Arrivals -->
+  <section class="products">
+    <div class="section-head">New Arrivals</div>
+    <div class="product-grid">
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Men's T-shirt"></div>
+        <div class="meta">Basic Crew Neck Tee</div>
+        <div class="price">$44.00</div>
+      </div>
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Women's T-shirt"></div>
+        <div class="meta">Women's Crew Neck Tee</div>
+        <div class="price">$42.00</div>
+      </div>
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80" alt="Sneakers"></div>
+        <div class="meta">Premium Sneakers</div>
+        <div class="price">$89.00</div>
+      </div>
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1594223274512-ad4803739b7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Backpack"></div>
+        <div class="meta">Urban Backpack</div>
+        <div class="price">$65.00</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bestsellers -->
+  <section class="products">
+    <div class="section-head">Our Bestsellers</div>
+    <div class="product-grid">
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Headphones"></div>
+        <div class="meta">Wireless Headphones</div>
+        <div class="price">$129.00</div>
+      </div>
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Camera"></div>
+        <div class="meta">Digital Camera</div>
+        <div class="price">$599.00</div>
+      </div>
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80" alt="Smartwatch"></div>
+        <div class="meta">Smart Watch</div>
+        <div class="price">$199.00</div>
+      </div>
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1543512214-318c7553f230?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Laptop"></div>
+        <div class="meta">Ultrabook Laptop</div>
+        <div class="price">$899.00</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wide banner -->
+  <div class="wide-banner">
+    <div class="wrap">
+      <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80" alt="Smartphone">
+      <div class="txt">
+        <h3>Phone of the year</h3>
+        <p class="muted">Lorem ipsum is simply dummy text of the printing and typesetting industry.</p>
+        <a class="btn" href="#">Shop Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Special Offers -->
+  <section class="products">
+    <div class="section-head">Special Offers</div>
+    <div class="product-grid">
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Coffee Mug"></div>
+        <div class="meta">Ceramic Coffee Mug</div>
+        <div class="price">$24.00</div>
+      </div>
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Perfume"></div>
+        <div class="meta">Premium Perfume</div>
+        <div class="price">$79.00</div>
+      </div>
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Watch"></div>
+        <div class="meta">Luxury Watch</div>
+        <div class="price">$299.00</div>
+      </div>
+      <div class="product">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1594736797933-d0b64c69516a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Sunglasses"></div>
+        <div class="meta">Designer Sunglasses</div>
+        <div class="price">$149.00</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap">
+      <div class="col">
+        <h4>Menu</h4>
+        <ul style="list-style:none;margin-top:12px;line-height:2;color:#666">
+          <li>Home</li>
+          <li>Shop</li>
+          <li>About</li>
+          <li>Contact</li>
+          <li>Journal</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h4>Shop</h4>
+        <ul style="list-style:none;margin-top:12px;line-height:2;color:#666">
+          <li>Category 1</li>
+          <li>Category 2</li>
+          <li>Category 3</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h4>Help</h4>
+        <ul style="list-style:none;margin-top:12px;line-height:2;color:#666">
+          <li>Privacy Policy</li>
+          <li>Shipping</li>
+        </ul>
+      </div>
+      <div class="col center">
+        <div>
+          <div style="font-weight:700;margin-bottom:6px">(052) 611-5711</div>
+          <div class="muted">company@domain.com</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Category dropdown
+    const catBtn = document.getElementById('catBtn');
+    const catMenu = document.getElementById('catMenu');
+    catBtn.addEventListener('click', e => {
+      catMenu.style.display = (catMenu.style.display === 'block') ? 'none' : 'block';
+      e.stopPropagation();
+    });
+    
+    // Account dropdown
+    const accountBtn = document.getElementById('accountBtn');
+    const accountMenu = document.getElementById('accountMenu');
+    accountBtn.addEventListener('click', e => {
+      accountMenu.style.display = (accountMenu.style.display === 'block') ? 'none' : 'block';
+      e.stopPropagation();
+    });
+    
+    // Close dropdowns when clicking elsewhere
+    document.addEventListener('click', e => {
+      catMenu.style.display = 'none';
+      accountMenu.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
